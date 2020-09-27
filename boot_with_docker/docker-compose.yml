@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  centos:
+    build: ./centos
+    container_name: boot-container
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./gradle-project:/gradle-project
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    privileged: true
+    tty: true
+
+  mysql:
+    image: mysql:5.7
+    container_name: boot-mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+      - ./mysql/settings:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: bootdb
+      MYSQL_USER: boot
+      MYSQL_PASSWORD: boot
+      MYSQL_ROOT_PASSWORD: root
+

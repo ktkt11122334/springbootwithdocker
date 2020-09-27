@@ -1,0 +1,42 @@
+spring:
+  profiles:
+    active: localhost
+    
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type:
+          EnumTyp: trace
+          descriptor:
+            sql:
+              BasicBinder: trace
+          
+server: 
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    
+
+---
+spring:
+  profiles: localhost
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bootdb
+    username: root
+    password:
+    sql-script-encoding: utf-8
+
+---
+spring:
+  profiles: docker
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql/bootdb
+    username: boot
+    password: boot
+    sql-script-encoding: utf-8
